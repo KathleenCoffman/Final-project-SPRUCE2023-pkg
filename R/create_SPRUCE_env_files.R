@@ -1,3 +1,13 @@
+#' Creates an vector object containing all SPRUCE WEW csv files of interest
+#'
+#' @param plot_numbers Numeric vector specifying the plot numbers.
+#' @param date Character string specifying the date in the format "YYYYMMDD".
+#'
+#' @return a character vector containing SPRUCE environmental files
+#'
+#'
+#'
+#' @export
 create_SPRUCE_env_files <- function() {
   SPRUCE_env_files <- c(
     "WEW PLOT_04_Complete_Environ_20220518.csv",

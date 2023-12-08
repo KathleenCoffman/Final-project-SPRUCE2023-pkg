@@ -1,3 +1,13 @@
+#' Scatter Plot of some SPRUCE soil temp data by Year
+#'
+#' @param renamed_merged_SPRUCE_df A data frame containing environmental data, including columns "Year", "soil_temp_zoneB_10cmdepth", "CO2_trmt", and "Temp_Target".
+#' @param Year The column 'year'.
+#' @param soil_temp_zoneB_10cmdepth The column representing soil temperature at 10cm depth in zone B.
+#' @param CO2_trmt The column representing CO2 treatment, either ambient or elevated.
+#' @param Temp_Target The column representing temperature treatment in SPRUCE enclosures.
+#'
+#' @return A scatter plot of soil temperature at 10cm depth (zone B) over time, according to temperature treatment and  CO2 treatment..
+#' @export
 plot_function <- function( renamed_merged_SPRUCE_df, Year, soil_temp_zoneB_10cmdepth, CO2_trmt, Temp_Target) {
   library(ggplot2)
 

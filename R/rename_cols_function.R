@@ -1,3 +1,11 @@
+#' Renaming columns to enhance comprehension
+#'
+#' @param df A data frame that will have columns renamed.
+#' @param col_rename_map A named list specifying the mapping of old column names to new column names.
+#'
+#' @return A data frame with columns renamed according to the specified column names.
+#'
+#' @export
 rename_cols_function <- function(df) {
   col_rename_map <- list( Year = 'Year',
                           Year_Fraction = 'Year_Fraction',
