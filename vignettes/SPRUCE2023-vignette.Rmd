@@ -1,0 +1,62 @@
+---
+title: "SPRUCE2023-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SPRUCE2023-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+## SPRUCE2023 WEW vignette 
+This package was created to merge multiple csv files from the SPRUCE WEW (Whole Ecosystems Warming) dataset (available for public access here: https://mnspruce.ornl.gov/datasets/spruce-whole-ecosystems-warming-wew-environmental-data-beginning-august-2015).
+The functions within this package merge multiple csv files of SPRUCE data into a single dataframe, change column names to enhance comprehension and user interpretation, chekc data for missing and negative values, and plot data in a faceted scatterplot. 
+
+### Libraries 
+Before getting started, there are several packages that support 'SPRUCE2023' that we need in our library. Then, we can install and load 'SPRUCE2023'.
+
+```{r}
+library(devtools)
+library(tidyverse)
+library(SPRUCE2023)
+```
+
+### Merge files into a Single Data Frame 
+Once we have the appropriate tools in our library, we can create a single list object containing all of our csv files. We have created a function (create_SPRUCE_env_files) that does this. In this example we are using files from the WEW_Complete_Environ_20220518 dataset (https://mnspruce.ornl.gov/datasets/spruce-whole-ecosystems-warming-wew-environmental-data-beginning-august-2015). Using print(SPRUCE_env_files) is optional, but use this if you'd like to see them in the console
+
+```{r}
+SPRUCE_env_files <- create_SPRUCE_env_files()
+```
+
+### Read and Merge the Files 
+Next, we want to read in the list object containing our files and merge them together. The 'read_and_merge_function' reads multiple csv files into a single data frame. Because the csv files have identical column names, number of columns and rows, and all are in the same order, 'bind_rows()' is utilized within our 'read_and_merge_csv_files' function to combine them. This function also removes spaces from column titles, replaces double underscores with single underscores in column titles, and removes a missing row of data (row 394554) to improve R compatibility. 
+
+```{r}
+merged_SPRUCE_df <- read_and_merge_csv_files(SPRUCE_env_files)
+```
+
+### Rename columns
+This step is optional, depending on the user's familiarity with the data. The 'rename_cols_function' applies more descriptive column names, reducing necessity for cross referencing the data. If you'd like to skip this step, here below is also the pdf containing data documentation. 
+
+```{r}
+knitr::include_graphics("file:///C:/Users/owner/OneDrive%20-%20University%20of%20Tennessee/MICR%20575/SPRUCE_WEW_Environmental_Data_20220518-DATA.documentation.pdf")
+```
+
+```{r}
+renamed_merged_SPRUCE_df <- rename_cols_function(merged_SPRUCE_df)
+```
+
+### Checking Data  
+It is important to check the data for a few things to make sure we know exactly what is going on. First, we will check for missing data values. The 'data_check_function' identifies numeric columns, and then checks this data for missing values.
+Next, we want to check for negative values. The 'value_ranges_function' checks numeric column data for negative values.
+```{r}
+data_check_function(renamed_merged_SPRUCE_df)
+```
+```{r}
+value_ranges_function(renamed_merged_SPRUCE_df)
+```
+
+### Plotting Data
+Now we are using a function to plot data of interest where the x axis is Year. You can choose any Y value you wish! But here, we used Mean soil temp at 5cm depth in "zone B". Here in this function, we look at 0 and 9 degree temperature target data according to CO2 treatment.
+```{r}
+plot_function(renamed_merged_SPRUCE_df, "Year", "soil_temp_zoneB_10cmdepth", "CO2_trmt", "Temp_Target")
+```
+
